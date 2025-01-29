@@ -199,6 +199,17 @@ static int __init diasom_rk3568_late_init(void)
 			of_probe();
 
 			of_register_fixup(diasom_rk3568_evb_ver3_fixup, NULL);
+		} else if ((!diasom_rk3568_probe_i2c(adapter, 0x50))) {
+			extern char __dtbo_rk3568_diasom_evb_ver1_2_1_start[];
+			struct device_node *overlay;
+
+			pr_info("EVB version 1.2.1 or above detected.\n");
+	
+			overlay = of_unflatten_dtb(__dtbo_rk3568_diasom_evb_ver1_2_1_start, INT_MAX);
+			of_overlay_apply_tree(of_get_root_node(), overlay);
+			of_probe();
+
+			of_register_fixup(diasom_rk3568_evb_fixup, NULL);
 		} else {
 			pr_info("EVB version 1.2 or earlier detected.\n");
 			of_register_fixup(diasom_rk3568_evb_fixup, NULL);

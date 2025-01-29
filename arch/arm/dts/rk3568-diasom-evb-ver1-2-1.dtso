@@ -1,0 +1,51 @@
+/* SPDX-License-Identifier: GPL-2.0+ */
+/* SPDX-FileCopyrightText: Alexander Shiyan <shc_work@mail.ru> */
+
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+
+&vcc3v3_pcie20 {
+    gpio = <&gpio0 RK_PC2 GPIO_ACTIVE_HIGH>;
+};
+
+&vcc5v0_usb3_host1 {
+    gpio = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
+};
+
+&vcc5v0_usb3_otg0 {
+    enable-active-high;
+    gpio = <&gpio0 RK_PC1 GPIO_ACTIVE_HIGH>;
+};
+
+&usb_type_c {
+	interrupt-parent = <&gpio1>;
+	interrupts = <RK_PA5 IRQ_TYPE_LEVEL_LOW>;
+};
+
+&csi1_pwr {
+    rockchip,pins =
+        <3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>;		/* CSI_PWREN1 */
+};
+
+&fusb302_pins {
+    rockchip,pins =
+		<1 RK_PA5 RK_FUNC_GPIO &pcfg_input_high>;		/* USB3_OTG_INT */
+};
+
+&pcie20_pwr_pins {
+    rockchip,pins =
+		<0 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;	/* PCIE20_PWREN */
+};
+
+&usb3_host1_en_pins {
+    rockchip,pins =
+        <0 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;	/* USB3_HOST1_EN */
+};
+
+&usb3_otg0_en_pins {
+    rockchip,pins =
+        <0 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;	/* USB3_OTG0_EN */
+};
