@@ -20,12 +20,44 @@
     gpio = <&gpio0 RK_PC1 GPIO_ACTIVE_HIGH>;
 };
 
-&usb_type_c {
-	interrupt-parent = <&gpio1>;
-	interrupts = <RK_PA5 IRQ_TYPE_LEVEL_LOW>;
+&i2c1 {
+    usb@22 {
+	    interrupt-parent = <&gpio1>;
+	    interrupts = <RK_PA5 IRQ_TYPE_LEVEL_LOW>;
+    };
 };
 
-&csi1_pwr {
+&i2c4 {
+    eeprom@50 {
+		compatible = "microchip,24aa025e48", "atmel,24c02";
+		reg = <0x50>;
+		pagesize = <16>;
+		vcc-supply = <&vcc3v3_sys>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		mac0: mac-address@fa {
+			reg = <0xfa 0x06>;
+			read-only;
+		};
+	};
+
+	eeprom@51 {
+		compatible = "microchip,24aa025e48", "atmel,24c02";
+		reg = <0x51>;
+		pagesize = <16>;
+		vcc-supply = <&vcc3v3_sys>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		mac1: mac-address@fa {
+			reg = <0xfa 0x06>;
+			read-only;
+		};
+	};
+};
+
+&csi1_v1_pwr {
     rockchip,pins =
         <3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>;		/* CSI_PWREN1 */
 };
@@ -33,6 +65,16 @@
 &fusb302_pins {
     rockchip,pins =
 		<1 RK_PA5 RK_FUNC_GPIO &pcfg_input_high>;		/* USB3_OTG_INT */
+};
+
+&gmac0 {
+	nvmem-cells = <&mac0>;
+	nvmem-cell-names = "mac-address";
+};
+
+&gmac1 {
+	nvmem-cells = <&mac1>;
+	nvmem-cell-names = "mac-address";
 };
 
 &pcie20_pwr_pins {
