@@ -6,6 +6,20 @@
 
 #include <dt-bindings/pinctrl/rockchip.h>
 
+&i2c1 {
+	usb@22 {
+		status = "disabled";
+	};
+};
+
+&pcie2x1 {
+	status = "disabled";
+};
+
+&pcie3x2 {
+	status = "disabled";
+};
+
 &spi1 {
 	status = "disabled";
 };
@@ -24,6 +38,10 @@
 
 &uart8 {
 	pinctrl-0 = <&uart8m0_xfer>;
+};
+
+&usb2phy0_host {
+	status = "disabled";
 };
 
 &pinctrl {
@@ -46,7 +64,18 @@
 				<2 RK_PC2 RK_FUNC_GPIO &pcfg_pull_up>,	/* UART7_CTS */
 				<2 RK_PC1 RK_FUNC_GPIO &pcfg_pull_up>,	/* UART7_RTS*/
 				<2 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>,	/* UART8_CTS */
-				<2 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>;	/* UART8_RTS */
+				<2 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,	/* UART8_RTS */
+				<4 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE30_RESET */
+				<4 RK_PC2 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE30_CLKREQ */
+				<4 RK_PC3 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE30_WAKE */
+				<3 RK_PD4 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE30_CLKIC */
+				<3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE30_PWREN */
+				<2 RK_PD0 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE20_CLKREQ */
+				<2 RK_PD1 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE20_WAKE */
+				<1 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE20_PERST */
+				<3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>,	/* PCIE20_PWREN */
+				<1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>,	/* USB3_HOST1_EN */
+				<1 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>;	/* USB3_OTG0_EN */
 		};
 	};
 };
